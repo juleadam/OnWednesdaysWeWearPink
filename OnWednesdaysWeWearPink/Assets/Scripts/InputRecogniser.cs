@@ -3,14 +3,9 @@ using System.Collections;
 
 public class InputRecogniser : MonoBehaviour {
 
-	public GameObject character;
-
-	// Use this for initialization
-	void Start () {
+	public delegate void InputEventHandler();
+	public static event InputEventHandler OnTouch;
 	
-	}
-	
-	// Update is called once per frame
 	void Update () {
 		CheckInput ();
 	}
@@ -18,7 +13,9 @@ public class InputRecogniser : MonoBehaviour {
 	void CheckInput () {
 		
 		if (Input.GetMouseButtonDown (0)) {
-			Debug.Log ("jump!");
+			if (OnTouch != null) {
+				OnTouch ();
+			}
 		}
 	}
 }
