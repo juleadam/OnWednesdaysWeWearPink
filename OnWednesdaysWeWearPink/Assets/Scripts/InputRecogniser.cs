@@ -3,6 +3,8 @@ using System.Collections;
 
 public class InputRecogniser : MonoBehaviour {
 
+	public GameObject character;
+
 	// Use this for initialization
 	void Start () {
 	
