@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
 public class JumpingScript : MonoBehaviour {
@@ -31,10 +31,16 @@ public class JumpingScript : MonoBehaviour {
 	}
 
 	void Jump() {
+<<<<<<< HEAD
 		Debug.Log ("Jump " + _chargeLevel);
 		_rigidBody.AddForce (new Vector2(0, _jumpVelocity) * _chargeLevel, ForceMode2D.Impulse);
 		_chargeLevel = 0;
 	}
+=======
+		if (_grounded) {
+			_rigidBody.AddForce (new Vector2(0, JumpingForce), ForceMode2D.Impulse);
+		}
+>>>>>>> d191f7f6912b391c8ec9389c119bb99d5330cde3
 
 	void Charge() {
 		

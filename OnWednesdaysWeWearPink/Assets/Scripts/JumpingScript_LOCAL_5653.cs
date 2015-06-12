@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
 public class JumpingScript : MonoBehaviour {
@@ -8,7 +8,6 @@ public class JumpingScript : MonoBehaviour {
 	public Transform groundCheck;
 	float _groundRadius = 0.2f;
 	public LayerMask whatIsGround;
-	public float JumpingForce;
 
 	float _chargeLevel = 0;
 	float _chargeSpeed = 2f;
