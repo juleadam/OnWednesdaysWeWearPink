@@ -9,8 +9,13 @@ public class JumpingScript : MonoBehaviour {
 	float _groundRadius = 0.2f;
 	public LayerMask whatIsGround;
 
+	float _chargeLevel = 0;
+	float _chargeSpeed = 2f;
+	float _jumpVelocity = 50f;
+
 	void Start () {
-		InputRecogniser.OnTouch += Jump;
+		InputRecogniser.OnTouchDown += Charge;
+		InputRecogniser.OnTouchRelease += Jump;
 		_rigidBody = this.GetComponent<Rigidbody2D> ();
 	}
 
@@ -22,15 +27,20 @@ public class JumpingScript : MonoBehaviour {
 
 		_grounded = Physics2D.OverlapCircle (groundCheck.position, _groundRadius, whatIsGround);
 
-
-	
 	}
 
 	void Jump() {
-		if (_grounded) {
-			_rigidBody.AddForce (new Vector2(0, 20), ForceMode2D.Impulse);
-		}
+		Debug.Log ("Jump " + _chargeLevel);
+		_rigidBody.AddForce (new Vector2(0, _jumpVelocity) * _chargeLevel, ForceMode2D.Impulse);
+		_chargeLevel = 0;
+	}
 
+	void Charge() {
+		
+		if (_grounded && _chargeLevel < 2) {
+			Debug.Log ("charge");
+			_chargeLevel += Time.deltaTime * _chargeSpeed;
+		}
 	}
 
 }
