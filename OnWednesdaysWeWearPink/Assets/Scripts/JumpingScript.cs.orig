@@ -4,8 +4,8 @@ using System.Collections;
 public class JumpingScript : MonoBehaviour {
 
 	Rigidbody2D _rigidBody;
-	public Collider2D Ground;
 	public bool IsGrounded;
+	public Collider2D Ground;
 	public Transform groundCheck;
 	float _groundRadius = 0.2f;
 	public LayerMask whatIsGround;
@@ -27,8 +27,17 @@ public class JumpingScript : MonoBehaviour {
 
 	void FixedUpdate() {
 
+<<<<<<< HEAD
 		IsGrounded = Physics2D.OverlapCircle (groundCheck.position, _groundRadius, whatIsGround);
 		Ground = Physics2D.OverlapCircle (groundCheck.position, _groundRadius, whatIsGround);
+	}
+
+	void Jump() {
+		if (IsGrounded) {
+			_rigidBody.AddForce (new Vector2(0, 20), ForceMode2D.Impulse);
+		}
+=======
+		_grounded = Physics2D.OverlapCircle (groundCheck.position, _groundRadius, whatIsGround);
 
 	}
 
@@ -37,10 +46,11 @@ public class JumpingScript : MonoBehaviour {
 		_rigidBody.AddForce (new Vector2(0, _jumpVelocity) * _chargeLevel, ForceMode2D.Impulse);
 		_chargeLevel = 0;
 	}
+>>>>>>> 3abef24747118698d38213223cc499dfb8fb07d5
 
 	void Charge() {
 		
-		if (IsGrounded && _chargeLevel < 2) {
+		if (_grounded && _chargeLevel < 2) {
 			Debug.Log ("charge");
 			_chargeLevel += Time.deltaTime * _chargeSpeed;
 		}
