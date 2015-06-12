@@ -8,6 +8,7 @@ public class JumpingScript : MonoBehaviour {
 	public Transform groundCheck;
 	float _groundRadius = 0.2f;
 	public LayerMask whatIsGround;
+	public float JumpingForce;
 
 	void Start () {
 		InputRecogniser.OnTouch += Jump;
@@ -28,7 +29,7 @@ public class JumpingScript : MonoBehaviour {
 
 	void Jump() {
 		if (_grounded) {
-			_rigidBody.AddForce (new Vector2(0, 20), ForceMode2D.Impulse);
+			_rigidBody.AddForce (new Vector2(0, JumpingForce), ForceMode2D.Impulse);
 		}
 
 	}
