@@ -18,10 +18,8 @@ public class GroundCheck : MonoBehaviour {
 
 		if (jumpingScript.IsGrounded) {
 			PlatformMovement platformMovement = jumpingScript.Ground.GetComponent<PlatformMovement> ();
-		} else {
-			//Debug.Log ("Pikachu is in the air!");
-		}
-
+			Move (platformMovement._movingDirection, platformMovement.Speed);
+		} 
 	}
 
 	private void Move(MovingDirection direction, float speed){
