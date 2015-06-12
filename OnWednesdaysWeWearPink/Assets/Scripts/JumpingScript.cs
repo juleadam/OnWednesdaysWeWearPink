@@ -19,6 +19,9 @@ public class JumpingScript : MonoBehaviour {
 		InputRecogniser.OnTouchDown += Charge;
 		InputRecogniser.OnTouchRelease += Jump;
 		_rigidBody = this.GetComponent<Rigidbody2D> ();
+
+
+		IsGrounded = false;
 	}
 
 	void Update () {
