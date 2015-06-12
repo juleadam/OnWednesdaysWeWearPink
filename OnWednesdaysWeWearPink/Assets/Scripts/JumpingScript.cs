@@ -22,14 +22,12 @@ public class JumpingScript : MonoBehaviour {
 
 		_grounded = Physics2D.OverlapCircle (groundCheck.position, _groundRadius, whatIsGround);
 
-		if (_grounded) {
-			
-		}
+
 	
 	}
 
 	void Jump() {
-		if (!_grounded) {
+		if (_grounded) {
 			_rigidBody.AddForce (new Vector2(0, 20), ForceMode2D.Impulse);
 		}
 
