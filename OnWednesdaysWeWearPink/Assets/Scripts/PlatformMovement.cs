@@ -6,11 +6,13 @@ public class PlatformMovement : MonoBehaviour {
 	public float Speed;
 	public float LeftBorder;
 	public float RightBorder;
-	private MovingDirection _movingDirection;
+	public MovingDirection _movingDirection;
 
 
 	void Start () {
 		_movingDirection = MovingDirection.Left;
+		LeftBorder = LeftBorder == 0 ? -2 : LeftBorder;
+		RightBorder = RightBorder == 0 ? 2 : RightBorder;
 	}
 
 	void Update () {
@@ -34,6 +36,6 @@ public class PlatformMovement : MonoBehaviour {
 			transform.position = new Vector2 (transform.position.x + Speed/50, transform.position.y);
 		}			
 	}
-		
-	enum MovingDirection {Left, Right};
 }
+
+public enum MovingDirection {Left, Right};
