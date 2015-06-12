@@ -15,7 +15,6 @@ public class JumpingScript : MonoBehaviour {
 	}
 
 	void Jump() {
-		Debug.Log ("jump!");
 		_rigidBody.AddForce (new Vector2(0, 20), ForceMode2D.Impulse);
 	}
 
