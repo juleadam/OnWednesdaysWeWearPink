@@ -11,7 +11,6 @@ public class CameraFollowScript : MonoBehaviour {
 
 	void Update () {
 
-
 		if ((character.position.y - transform.position.y) > 10f) {
 			var from = transform.position;
 			var to = new Vector3 (transform.position.x, transform.position.y + 50f, transform.position.z);
