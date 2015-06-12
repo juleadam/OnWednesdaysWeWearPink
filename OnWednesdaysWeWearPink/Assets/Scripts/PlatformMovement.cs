@@ -29,7 +29,6 @@ public class PlatformMovement : MonoBehaviour {
 	}
 
 	private void Move(MovingDirection direction){
-
 		if (direction == MovingDirection.Left) {
 			transform.position = new Vector2 (transform.position.x - Speed/50, transform.position.y);
 		} else if (direction == MovingDirection.Right) {

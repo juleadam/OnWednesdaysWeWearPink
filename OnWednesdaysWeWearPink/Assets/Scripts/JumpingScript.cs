@@ -4,7 +4,8 @@ using System.Collections;
 public class JumpingScript : MonoBehaviour {
 
 	Rigidbody2D _rigidBody;
-	bool _grounded;
+	public bool IsGrounded;
+	public Collider2D Ground;
 	public Transform groundCheck;
 	float _groundRadius = 0.2f;
 	public LayerMask whatIsGround;
@@ -20,14 +21,12 @@ public class JumpingScript : MonoBehaviour {
 
 	void FixedUpdate() {
 
-		_grounded = Physics2D.OverlapCircle (groundCheck.position, _groundRadius, whatIsGround);
-
-
-	
+		IsGrounded = Physics2D.OverlapCircle (groundCheck.position, _groundRadius, whatIsGround);
+		Ground = Physics2D.OverlapCircle (groundCheck.position, _groundRadius, whatIsGround);
 	}
 
 	void Jump() {
-		if (_grounded) {
+		if (IsGrounded) {
 			_rigidBody.AddForce (new Vector2(0, 20), ForceMode2D.Impulse);
 		}
 
