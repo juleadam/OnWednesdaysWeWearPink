@@ -6,16 +6,16 @@ public class JumpingScript : MonoBehaviour {
 	public bool IsGrounded;
 	public Transform groundCheck;
 	public LayerMask whatIsGround;
-	public float MaxJumpForce;
 	public float HorizontalSpeed;
 	public MovingDirection MovingDirection;
 
 	Rigidbody2D _rigidBody;
 	const float _groundRadius = 0.2f;
-	float _chargeLevel = 0;
-	const float _maxChargeLevel = 3f;
-	const float _chargeSpeed = 5f;
-	const float _jumpVelocity = 25f;
+	const float _minChargeLevel = 4f;
+	float _chargeLevel = _minChargeLevel;
+	float _maxChargeLevel = 10f;
+	float _chargeSpeed = 10f;
+	float _jumpVelocity = 5f;
 
 	public delegate void ChargerEventHandler(float chargeAmount);
 	public static event ChargerEventHandler OnCharge;
@@ -55,7 +55,7 @@ public class JumpingScript : MonoBehaviour {
 		}
 
 		_rigidBody.AddForce (new Vector2(0, jumpForce), ForceMode2D.Impulse);
-		_chargeLevel = 0;
+		_chargeLevel = _minChargeLevel;
 	}
 
 	void Charge() {
@@ -67,7 +67,7 @@ public class JumpingScript : MonoBehaviour {
 			}
 
 			if (OnCharge != null) {
-				OnCharge (_chargeLevel / _maxChargeLevel);
+				OnCharge ((_chargeLevel - _minChargeLevel) / (_maxChargeLevel - _minChargeLevel));
 			}
 		}
 	}
