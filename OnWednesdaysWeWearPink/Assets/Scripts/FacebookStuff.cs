@@ -6,7 +6,7 @@ public class FacebookStuff : MonoBehaviour {
 	void Start () {
 
 		if (FB.IsLoggedIn) {
-			GetComponent<Text> ().text = FB.UserId;
+			GetComponent<Text> ().text = AwesomeGlobals.fbName;
 		}
 	}
 
