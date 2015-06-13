@@ -2,31 +2,25 @@
 using System.Collections;
 
 public class GroundCheck : MonoBehaviour {
-
-
-
-	void Start () {
-	
-	}
 		
 	void Update () {
-	
-	}
-
-	void FixedUpdate() {
 		var jumpingScript = (JumpingScript) transform.parent.GetComponentInChildren<JumpingScript> () as JumpingScript;
 
 		if (jumpingScript.IsGrounded) {
 			PlatformMovement platformMovement = jumpingScript.Ground.GetComponent<PlatformMovement> ();
-			Move (platformMovement._movingDirection, platformMovement.Speed);
+
+			if (platformMovement != null && platformMovement.MovingDirection != null && platformMovement.Speed != null) {
+				Move (platformMovement.MovingDirection, platformMovement.Speed);
+			}
+
 		} 
 	}
 
 	private void Move(MovingDirection direction, float speed){
 		if (direction == MovingDirection.Left) {
-			transform.position = new Vector2 (transform.position.x - speed/50, transform.position.y);
+			transform.parent.transform.position = new Vector2 (transform.parent.transform.position.x - speed/50, transform.parent.transform.position.y);
 		} else if (direction == MovingDirection.Right) {
-			transform.position = new Vector2 (transform.position.x + speed/50, transform.position.y);
+			transform.parent.transform.position = new Vector2 (transform.parent.transform.position.x + speed/50, transform.parent.transform.position.y);
 		}			
 	}
 }

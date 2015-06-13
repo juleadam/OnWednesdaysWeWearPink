@@ -6,25 +6,25 @@ public class PlatformMovement : MonoBehaviour {
 	public float Speed;
 	public float LeftBorder;
 	public float RightBorder;
-	public MovingDirection _movingDirection;
+	public MovingDirection MovingDirection;
 
 
 	void Start () {
-		_movingDirection = MovingDirection.Left;
+		MovingDirection = MovingDirection.Left;
 		LeftBorder = LeftBorder == 0 ? -2 : LeftBorder;
 		RightBorder = RightBorder == 0 ? 2 : RightBorder;
 	}
 
 	void Update () {
-		if (_movingDirection == MovingDirection.Left && transform.position.x < LeftBorder) {
-			_movingDirection = MovingDirection.Right;
+		if (MovingDirection == MovingDirection.Left && transform.position.x < LeftBorder) {
+			MovingDirection = MovingDirection.Right;
 		}
 
-		if (_movingDirection == MovingDirection.Right && transform.position.x > RightBorder) {
-			_movingDirection = MovingDirection.Left;
+		if (MovingDirection == MovingDirection.Right && transform.position.x > RightBorder) {
+			MovingDirection = MovingDirection.Left;
 		}
 
-		Move (_movingDirection);
+		Move (MovingDirection);
 
 	}
 
