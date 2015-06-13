@@ -81,9 +81,9 @@ public class PlatformSpawner : MonoBehaviour {
 		platform.GetComponent<PlatformMovement>().Speed = AveragePlatformSpeed + 
 			Random.Range(-StandardDeviationOfPlatformSpeed, StandardDeviationOfPlatformSpeed);
 		if(Random.Range(0f,1f) < 0.5f) {
-			platform.GetComponent<PlatformMovement>()._movingDirection = MovingDirection.Left;
+			platform.GetComponent<PlatformMovement>().MovingDirection = MovingDirection.Left;
 		} else {
-			platform.GetComponent<PlatformMovement>()._movingDirection = MovingDirection.Right;
+			platform.GetComponent<PlatformMovement>().MovingDirection = MovingDirection.Right;
 		}
 		platform.transform.localScale = new Vector3(GetRandomPlatformScale (), 1, 1);
 		Platforms.Insert (0, platform);
