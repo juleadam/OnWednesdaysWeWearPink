@@ -11,8 +11,13 @@ public class JumpingScript : MonoBehaviour {
 	Rigidbody2D _rigidBody;
 	const float _groundRadius = 0.2f;
 	float _chargeLevel = 0;
-	const float _chargeSpeed = 2f;
+	const float _maxChargeLevel = 3f;
+	const float _chargeSpeed = 5f;
 	const float _jumpVelocity = 25f;
+
+	public delegate void ChargerEventHandler(float chargeAmount);
+	public static event ChargerEventHandler OnCharge;
+	public static event ChargerEventHandler OnJump;
 
 	void Start () {
 		InputRecogniser.OnTouchDown += Charge;
@@ -29,8 +34,9 @@ public class JumpingScript : MonoBehaviour {
 	void Jump() {
 		
 		var jumpForce = _jumpVelocity * _chargeLevel;
-		if (jumpForce > MaxJumpForce) {
-			jumpForce = MaxJumpForce;
+
+		if (OnJump != null) {
+			OnJump (0);
 		}
 
 		_rigidBody.AddForce (new Vector2(0, jumpForce), ForceMode2D.Impulse);
@@ -39,7 +45,15 @@ public class JumpingScript : MonoBehaviour {
 
 	void Charge() {
 		if (IsGrounded) {
-			_chargeLevel += Time.deltaTime * _chargeSpeed;
+			if (_chargeLevel < _maxChargeLevel) {
+				_chargeLevel += Time.deltaTime * _chargeSpeed;
+			} else {
+				_chargeLevel = _maxChargeLevel;
+			}
+
+			if (OnCharge != null) {
+				OnCharge (_chargeLevel / _maxChargeLevel);
+			}
 		}
 	}
 
