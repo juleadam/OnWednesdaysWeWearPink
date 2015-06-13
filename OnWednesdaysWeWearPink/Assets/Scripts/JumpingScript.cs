@@ -55,7 +55,7 @@ public class JumpingScript : MonoBehaviour {
 			}
 
 			_rigidBody.AddForce (new Vector2(0, jumpForce), ForceMode2D.Impulse);
-			_chargeLevel = 0;
+			_chargeLevel = _minChargeLevel;
 		}
 	}
 
