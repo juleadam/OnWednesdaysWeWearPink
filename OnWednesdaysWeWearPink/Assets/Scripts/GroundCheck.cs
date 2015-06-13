@@ -9,7 +9,7 @@ public class GroundCheck : MonoBehaviour {
 		if (jumpingScript.IsGrounded) {
 			PlatformMovement platformMovement = jumpingScript.Ground.GetComponent<PlatformMovement> ();
 
-			if (platformMovement != null && platformMovement.MovingDirection != null && platformMovement.Speed != null) {
+			if (platformMovement != null) {
 				Move (platformMovement.MovingDirection, platformMovement.Speed);
 			}
 

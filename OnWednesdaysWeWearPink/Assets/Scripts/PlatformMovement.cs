@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
+
+public enum MovingDirection {Left, Right};
 
 public class PlatformMovement : MonoBehaviour {
 
@@ -11,8 +12,8 @@ public class PlatformMovement : MonoBehaviour {
 
 	void Start () {
 		MovingDirection = MovingDirection.Left;
-		LeftBorder = LeftBorder == 0 ? -2 : LeftBorder;
-		RightBorder = RightBorder == 0 ? 2 : RightBorder;
+		LeftBorder = LeftBorder <= 0 ? -2 : LeftBorder;
+		RightBorder = RightBorder <= 0 ? 2 : RightBorder;
 	}
 
 	void Update () {
@@ -36,5 +37,3 @@ public class PlatformMovement : MonoBehaviour {
 		}			
 	}
 }
-
-public enum MovingDirection {Left, Right};
