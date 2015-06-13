@@ -47,15 +47,16 @@ public class JumpingScript : MonoBehaviour {
 	}
 
 	void Jump() {
+		if (IsGrounded) {
+			var jumpForce = _jumpVelocity * _chargeLevel;
 
-		var jumpForce = _jumpVelocity * _chargeLevel;
+			if (OnJump != null) {
+				OnJump (0);
+			}
 
-		if (OnJump != null) {
-			OnJump (0);
+			_rigidBody.AddForce (new Vector2(0, jumpForce), ForceMode2D.Impulse);
+			_chargeLevel = 0;
 		}
-
-		_rigidBody.AddForce (new Vector2(0, jumpForce), ForceMode2D.Impulse);
-		_chargeLevel = 0;
 	}
 
 	void Charge() {
