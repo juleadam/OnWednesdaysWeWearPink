@@ -5,6 +5,7 @@ public class PlatformLifeTime : MonoBehaviour {
 	public bool Cull = false;
 
 	public float FallingVelocity;
+	public int TimeBeforeFalling;
 	public int TimeToLive;
 
 	private float StartingHeight;
@@ -25,14 +26,16 @@ public class PlatformLifeTime : MonoBehaviour {
 		}
 
 		if (!CharacterHasGoneAbove) {
-			CharacterHasGoneAbove = StartingHeight < Character.transform.position.y - 2f;
+			CharacterHasGoneAbove = StartingHeight < Character.transform.position.y;
 			if(CharacterHasGoneAbove) {
+				if(((long)Time.time*1000) - TimeOfCharacterAbovePlatformMs > TimeBeforeFalling) {
+					Falling = true;
+				}
 				TimeOfCharacterAbovePlatformMs = (long)Time.time * 1000;
-				Debug.Log(TimeOfCharacterAbovePlatformMs);
 			}
 		} else {
 			if(((long)Time.time*1000) - TimeOfCharacterAbovePlatformMs > TimeToLive) {
-				Falling = true;
+				Cull = true;
 			}
 		}
 
