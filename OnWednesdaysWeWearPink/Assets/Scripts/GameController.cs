@@ -28,6 +28,6 @@ public class GameController : MonoBehaviour {
 	}
 
 	public void ResetGame() {
-		Application.LoadLevel(0);
+		Application.LoadLevel(1);
 	}
 }
