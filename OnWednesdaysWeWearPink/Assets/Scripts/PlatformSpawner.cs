@@ -3,7 +3,10 @@ using System.Collections.Generic;
 
 public class PlatformSpawner : MonoBehaviour {
 	public GameObject PlatformPrefab;
+	public GameObject PlatformFragilePrefab;
 	public GameObject StartingPlatform;
+
+	public int FragilePlatformSpawnRate;
 	
 	public float DistanceToSpawnPlatforms;
 	public float DistanceToKeepPlatforms;
@@ -56,14 +59,17 @@ public class PlatformSpawner : MonoBehaviour {
 	}
 
 	private void SpawnPlatform() {
+		GameObject TypeToSpawn = Random.Range (1, FragilePlatformSpawnRate) == 1 ? PlatformFragilePrefab : PlatformPrefab;
 		float distanceFromHighestPlatform = AverageDistanceBetweenPlatforms + 
 			Random.Range(-StandardDeviationOfPlatformDistance, StandardDeviationOfPlatformDistance);
-		var platform = Instantiate (PlatformPrefab,
+		var platform = Instantiate (TypeToSpawn,
 		                            new Vector2 (Camera.main.transform.position.x, Platforms[0].transform.position.y + distanceFromHighestPlatform),
 		                            transform.rotation) as GameObject;
 		float speed = AveragePlatformSpeed + 
 			Random.Range(-StandardDeviationOfPlatformSpeed, StandardDeviationOfPlatformSpeed);
-		while (Platforms[0].GetComponent<PlatformMovement> () != null && speed == Platforms[0].GetComponent<PlatformMovement> ().Speed) {
+		while (Platforms[0].GetComponent<PlatformMovement> () != null && 
+		       (speed > Platforms[0].GetComponent<PlatformMovement> ().Speed - 0.3f &&
+		 		speed < Platforms[0].GetComponent<PlatformMovement> ().Speed + 0.3f)) {
 			speed = AveragePlatformSpeed + 
 				Random.Range(-StandardDeviationOfPlatformSpeed, StandardDeviationOfPlatformSpeed);
 		}
@@ -79,11 +85,12 @@ public class PlatformSpawner : MonoBehaviour {
 
 	private void RemovePlatforms() {
 		List<int> indexesToRemove = new List<int>();
-		for (int i = Platforms.Count - 1; 
-		     i >= 1 && 
-		     Platforms[i].transform.position.y < Camera.main.transform.position.y - DistanceToKeepPlatforms;
-		     i--) {
-			indexesToRemove.Add(i);
+		for (int i = Platforms.Count - 1; i >= 1; i--) {
+			if(Platforms[i].transform.position.y < Camera.main.transform.position.y - DistanceToKeepPlatforms) {
+				indexesToRemove.Add(i);
+			} else if(Platforms[i].GetComponent<PlatformLifeTime>() != null && Platforms[i].GetComponent<PlatformLifeTime>().Cull) {
+				indexesToRemove.Add(i);
+			}
 		}
 		foreach(int i in indexesToRemove) {
 			Destroy(Platforms[i]);
