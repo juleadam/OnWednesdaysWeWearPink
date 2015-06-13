@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class GameController : MonoBehaviour {
 	public GameObject Character;
+
+	public Text ScoreText;
 
 	public float WhereToDieOffset = 10;
 	private float WhereToDie;
@@ -13,23 +16,16 @@ public class GameController : MonoBehaviour {
 		WhereToDie = Character.transform.position.y;
 	}
 
-	void OnGUI() {
-		if (GUI.Button (new Rect (10, 10, 100, 30), "Reset Level")) {
-			ResetGame();
-		}
-		GUI.TextArea (new Rect (10, 50, 50, 30), Score.ToString());
-	}
-
 	void Update () {
 		if (Character.transform.position.y > Score) {
-			Score = Mathf.Round(Character.transform.position.y*100f)/100f;
+			ScoreText.text = Mathf.Round(Character.transform.position.y).ToString();
 		}
 		if (Character.transform.position.y < WhereToDie - WhereToDieOffset) {
 			ResetGame();
 		}
 	}
 
-	void ResetGame() {
+	public void ResetGame() {
 		Application.LoadLevel(0);
 	}
 }
