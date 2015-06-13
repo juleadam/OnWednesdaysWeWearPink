@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public enum MovingDirection {Left, Right};
+public enum MovingDirection {Left, Right, None};
 
 public class PlatformMovement : MonoBehaviour {
 

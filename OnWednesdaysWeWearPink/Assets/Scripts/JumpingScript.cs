@@ -7,6 +7,8 @@ public class JumpingScript : MonoBehaviour {
 	public Transform groundCheck;
 	public LayerMask whatIsGround;
 	public float MaxJumpForce;
+	public float HorizontalSpeed;
+	public MovingDirection MovingDirection;
 
 	Rigidbody2D _rigidBody;
 	const float _groundRadius = 0.2f;
@@ -24,15 +26,28 @@ public class JumpingScript : MonoBehaviour {
 		InputRecogniser.OnTouchRelease += Jump;
 		_rigidBody = GetComponent<Rigidbody2D> ();
 		IsGrounded = false;
+		MovingDirection = MovingDirection.None;
 	}
 
 	void FixedUpdate() {
 		IsGrounded = Physics2D.OverlapCircle (groundCheck.position, _groundRadius, whatIsGround);
 		Ground = Physics2D.OverlapCircle (groundCheck.position, _groundRadius, whatIsGround);
+
+		if (IsStandingOnSolidGround ()) {
+			HorizontalSpeed = 0;
+			MovingDirection = MovingDirection.None;
+		} else if (IsStandingOnMovingPlatform ()) {
+			HorizontalSpeed = Ground.GetComponent<PlatformMovement> ().Speed;
+			MovingDirection = Ground.GetComponent<PlatformMovement> ().MovingDirection;
+		} else {
+			Move (MovingDirection, HorizontalSpeed);
+		}
+
+
 	}
 
 	void Jump() {
-		
+
 		var jumpForce = _jumpVelocity * _chargeLevel;
 
 		if (OnJump != null) {
@@ -64,6 +79,22 @@ public class JumpingScript : MonoBehaviour {
 	void UnsubscribeEvents() {
 		InputRecogniser.OnTouchDown -= Charge;
 		InputRecogniser.OnTouchRelease -= Jump;
+	}
+
+	public bool IsStandingOnMovingPlatform(){
+		return IsGrounded && Ground.GetComponent<PlatformMovement> ();
+	}
+
+	public bool IsStandingOnSolidGround(){
+		return IsGrounded && !Ground.GetComponent<PlatformMovement> ();
+	}
+
+	private void Move(MovingDirection direction, float speed){
+		if (direction == MovingDirection.Left) {
+			transform.position = new Vector2 (transform.position.x - speed/50, transform.position.y);
+		} else if (direction == MovingDirection.Right) {
+			transform.position = new Vector2 (transform.position.x + speed/50, transform.position.y);
+		}			
 	}
 
 }
