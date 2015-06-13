@@ -18,7 +18,9 @@ public class GameController : MonoBehaviour {
 
 	void Update () {
 		if (Character.transform.position.y > Score) {
-			ScoreText.text = Mathf.Round(Character.transform.position.y).ToString();
+			float pos = Mathf.Round(Character.transform.position.y);
+			Score = pos>Score?pos:Score;
+			ScoreText.text = Score.ToString();
 		}
 		if (Character.transform.position.y < WhereToDie - WhereToDieOffset) {
 			ResetGame();

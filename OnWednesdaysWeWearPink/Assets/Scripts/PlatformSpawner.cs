@@ -61,9 +61,13 @@ public class PlatformSpawner : MonoBehaviour {
 		var platform = Instantiate (PlatformPrefab,
 		                            new Vector2 (Camera.main.transform.position.x, Platforms[0].transform.position.y + distanceFromHighestPlatform),
 		                            transform.rotation) as GameObject;
-		
-		platform.GetComponent<PlatformMovement>().Speed = AveragePlatformSpeed + 
+		float speed = AveragePlatformSpeed + 
 			Random.Range(-StandardDeviationOfPlatformSpeed, StandardDeviationOfPlatformSpeed);
+		while (Platforms[0].GetComponent<PlatformMovement> () != null && speed == Platforms[0].GetComponent<PlatformMovement> ().Speed) {
+			speed = AveragePlatformSpeed + 
+				Random.Range(-StandardDeviationOfPlatformSpeed, StandardDeviationOfPlatformSpeed);
+		}
+		platform.GetComponent<PlatformMovement> ().Speed = speed;
 		if(Random.Range(0f,1f) < 0.5f) {
 			platform.GetComponent<PlatformMovement>().MovingDirection = MovingDirection.Left;
 		} else {
