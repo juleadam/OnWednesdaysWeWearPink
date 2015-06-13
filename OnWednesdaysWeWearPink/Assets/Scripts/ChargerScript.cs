@@ -13,7 +13,7 @@ public class ChargerScript : MonoBehaviour {
 	}
 
 	void Charge(float chargeAmount) {
-		Debug.Log ("Chargeamount " + chargeAmount);
+		//Debug.Log ("Chargeamount " + chargeAmount);
 		_chargeBar.fillAmount = chargeAmount;
 	}
 

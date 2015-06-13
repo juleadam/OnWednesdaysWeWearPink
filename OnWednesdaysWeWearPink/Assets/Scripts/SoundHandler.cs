@@ -13,7 +13,7 @@ public class SoundHandler : MonoBehaviour {
 
 	void PlayJumpingSound (float chargeLevel)
 	{
-		Debug.Log ("Jumpingsound!");
+		//Debug.Log ("Jumpingsound!");
 		GetComponent<AudioSource> ().Play ();
 	}
 

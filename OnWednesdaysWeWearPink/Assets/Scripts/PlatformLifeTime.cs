@@ -4,43 +4,37 @@ using System.Collections;
 public class PlatformLifeTime : MonoBehaviour {
 	public bool Cull = false;
 
-	public float FallingVelocity;
-	public int TimeBeforeFalling;
-	public int TimeToLive;
-
-	private float StartingHeight;
-	private bool Falling = false;
-	private bool CharacterHasGoneAbove = false;
-	private long TimeOfCharacterAbovePlatformMs;
+	public float TimeToLive;
+	private bool WeHaveTouchDown = false;
+	private bool WeHaveLostTouchDown = false;
+	private float TimeOfCharacterAbovePlatform = 0;
 
 	private GameObject Character;
+	private JumpingScript CharacterJumpingScript;
 
 	void Start () {
-		StartingHeight = this.transform.position.y;
 		Character = GameObject.Find ("Character");
+		CharacterJumpingScript = (JumpingScript) Character.GetComponentInChildren<JumpingScript> () as JumpingScript;
 	}
 
 	void Update () {
-		if (!Cull && this.transform.position.y < StartingHeight - 100f) {
+		if (CharacterJumpingScript.IsGrounded && 
+		    CharacterJumpingScript.Ground.GetInstanceID() == 
+		    	this.GetComponent<BoxCollider2D>().GetInstanceID()) {
+			WeHaveTouchDown = true;
+		}
+
+		if (WeHaveTouchDown && !CharacterJumpingScript.IsGrounded) {
+			WeHaveLostTouchDown = true;
+			GetComponent<Rigidbody2D>().isKinematic = false;
+		}
+
+		if (WeHaveLostTouchDown) {
+			TimeOfCharacterAbovePlatform += Time.deltaTime;
+		}
+
+		if (TimeOfCharacterAbovePlatform > TimeToLive) {
 			Cull = true;
-		}
-
-		if (!CharacterHasGoneAbove) {
-			CharacterHasGoneAbove = StartingHeight < Character.transform.position.y;
-			if(CharacterHasGoneAbove) {
-				if(((long)Time.time*1000) - TimeOfCharacterAbovePlatformMs > TimeBeforeFalling) {
-					Falling = true;
-				}
-				TimeOfCharacterAbovePlatformMs = (long)Time.time * 1000;
-			}
-		} else {
-			if(((long)Time.time*1000) - TimeOfCharacterAbovePlatformMs > TimeToLive) {
-				Cull = true;
-			}
-		}
-
-		if (Falling) {
-			this.transform.position = new Vector2(this.transform.position.x, this.transform.position.y-(FallingVelocity*Time.deltaTime));
 		}
 	}
 }
