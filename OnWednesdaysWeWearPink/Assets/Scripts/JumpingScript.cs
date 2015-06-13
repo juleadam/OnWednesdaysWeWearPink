@@ -49,7 +49,7 @@ public class JumpingScript : MonoBehaviour {
 
 	void Charge() {
 		
-		if (IsGrounded && _chargeLevel < 2) {
+		if (IsGrounded) {
 			Debug.Log ("charge");
 			_chargeLevel += Time.deltaTime * _chargeSpeed;
 			Debug.Log ("chargelevel: " + _chargeLevel);
