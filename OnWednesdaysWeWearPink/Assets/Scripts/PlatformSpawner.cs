@@ -25,24 +25,7 @@ public class PlatformSpawner : MonoBehaviour {
 
 	void Start () {
 		Platforms = new List<GameObject> ();
-		//InitialPlatform
 		Platforms.Add (StartingPlatform);
-		Debug.Log(StartingPlatform.transform.position.y);
-//		float distanceFromStartingPlatform = AverageDistanceBetweenPlatforms + 
-//			Random.Range(-StandardDeviationOfPlatformDistance, StandardDeviationOfPlatformDistance);
-//		var platform = Instantiate (PlatformPrefab,
-//		                           new Vector2 (Camera.main.transform.position.x, StartingPlatform.position.y + distanceFromStartingPlatform),
-//		                           transform.rotation) as GameObject;
-//
-//		platform.GetComponent<PlatformMovement>().Speed = AveragePlatformSpeed + 
-//			Random.Range(-StandardDeviationOfPlatformSpeed, StandardDeviationOfPlatformSpeed);
-//		if(Random.Range(0f,1f) < 0.5f) {
-//			platform.GetComponent<PlatformMovement>()._movingDirection = MovingDirection.Left;
-//		} else {
-//			platform.GetComponent<PlatformMovement>()._movingDirection = MovingDirection.Right;
-//		}
-//		platform.transform.localScale = new Vector3(GetRandomPlatformScale (), 1, 1);
-//		Platforms.Add(platform);
 
 		for (int i = 0; i < NrOfStartingPlatforms; i++) {
 			SpawnPlatform();
@@ -87,7 +70,6 @@ public class PlatformSpawner : MonoBehaviour {
 			platform.GetComponent<PlatformMovement>().MovingDirection = MovingDirection.Right;
 		}
 		platform.transform.localScale = new Vector3(GetRandomPlatformScale (), 1, 1);
-		Debug.Log ("Added platform at: " + platform.transform.position.y.ToString () + " because previous platform was at " + Platforms[0].transform.position.y.ToString() + " and distance was " + distanceFromHighestPlatform.ToString());
 		Platforms.Insert (0, platform);
 	}
 

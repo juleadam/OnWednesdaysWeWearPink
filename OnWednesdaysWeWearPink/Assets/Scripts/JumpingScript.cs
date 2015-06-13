@@ -19,7 +19,10 @@ public class JumpingScript : MonoBehaviour {
 	void Start () {
 		InputRecogniser.OnTouchDown += Charge;
 		InputRecogniser.OnTouchRelease += Jump;
+		Debug.Log (_rigidBody);
+		Debug.Log (this);
 		_rigidBody = this.GetComponent<Rigidbody2D> ();
+		Debug.Log (_rigidBody);
 
 
 		IsGrounded = false;
@@ -37,12 +40,19 @@ public class JumpingScript : MonoBehaviour {
 	}
 
 	void Jump() {
+		if (_rigidBody == null) {
+			Debug.Log (_rigidBody);
+			Debug.Log (this);
+			_rigidBody = this.GetComponent<Rigidbody2D> ();
+			Debug.Log (_rigidBody);
+		}
 		Debug.Log ("Jump chargelevel" + _chargeLevel);
 
 		var jumpForce = _jumpVelocity * _chargeLevel;
 		if (jumpForce > MaxJumpForce) {
 			jumpForce = MaxJumpForce;
 		}
+		Debug.Log (_rigidBody);
 		_rigidBody.AddForce (new Vector2(0, jumpForce), ForceMode2D.Impulse);
 		_chargeLevel = 0;
 	}
@@ -50,9 +60,9 @@ public class JumpingScript : MonoBehaviour {
 	void Charge() {
 		
 		if (IsGrounded) {
-			Debug.Log ("charge");
+			//Debug.Log ("charge");
 			_chargeLevel += Time.deltaTime * _chargeSpeed;
-			Debug.Log ("chargelevel: " + _chargeLevel);
+			//Debug.Log ("chargelevel: " + _chargeLevel);
 		}
 	}
 
